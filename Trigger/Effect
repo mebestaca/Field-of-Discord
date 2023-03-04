@@ -1,0 +1,265 @@
+Field of Discord Effect
+
+    Events
+
+        Time - Every 0.03 seconds of game time
+
+    Conditions
+
+    Actions
+
+        For each (Integer FD_Looper) from 1 to FD_Index, do (Actions)
+
+            Loop - Actions
+
+                -------- - --------
+
+                -------- stage 1 -- moving the projectile --------
+
+                If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+                    If - Conditions
+
+                        FD_Stage[FD_Looper] Equal to 0
+
+                    Then - Actions
+
+                        -------- - --------
+
+                        -------- check distance --------
+
+                        If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+                            If - Conditions
+
+                                FD_CurrentDistance[FD_Looper] Less than or equal to FD_MaxDistance[FD_Looper]
+
+                            Then - Actions
+
+                                -------- - --------
+
+                                -------- gradually descend --------
+
+                                Animation - Change FD_Projectile[FD_Looper] flying height to FD_CurrentHeight[FD_Looper] at 0.00
+
+                                Set FD_CurrentDistance[FD_Looper] = (FD_CurrentDistance[FD_Looper] + FD_Speed[FD_Looper])
+
+                                Set FD_CurrentHeight[FD_Looper] = ((4.00 x (FD_MaxHeight[FD_Level[FD_Looper]] / FD_MaxDistance[FD_Looper])) x ((FD_MaxDistance[FD_Looper] - FD_CurrentDistance[FD_Looper]) x (FD_CurrentDistance[FD_Looper] / FD_MaxDistance[FD_Looper])))
+
+                                Set FD_Point1 = (Position of FD_Projectile[FD_Looper])
+
+                                Set FD_Point2 = (FD_Point1 offset by FD_Speed[FD_Looper] towards FD_Angle[FD_Looper] degrees)
+
+                                -------- - --------
+
+                                Custom script:   call SetUnitY(udg_FD_Projectile[udg_FD_Looper], GetLocationY(udg_FD_Point2))
+
+                                Custom script:   call SetUnitX(udg_FD_Projectile[udg_FD_Looper], GetLocationX(udg_FD_Point2))
+
+                                -------- - --------
+
+                                Custom script:   call RemoveLocation(udg_FD_Point1)
+
+                                Custom script:   call RemoveLocation(udg_FD_Point2)
+
+                            Else - Actions
+
+                                -------- - --------
+
+                                -------- mark the area --------
+
+                                Set FD_Stage[FD_Looper] = 1
+
+                                Set FD_Point1 = (Position of FD_Projectile[FD_Looper])
+
+                                Unit - Create 1 FD_DummyUnitType for Neutral Passive at FD_Point1 facing Default building facing degrees
+
+                                Set FD_TargetUnit[FD_Looper] = (Last created unit)
+
+                                Custom script:   call RemoveLocation(udg_FD_Point1)
+
+                                -------- - --------
+
+                                -------- kill projectile --------
+
+                                Special Effect - Destroy FD_ProjectileEffect[FD_Looper]
+
+                                Unit - Add a 0.01 second Generic expiration timer to FD_Projectile[FD_Looper]
+
+                                -------- - --------
+
+                                -------- create mark --------
+
+                                Animation - Change FD_TargetUnit[FD_Looper]'s size to (FD_AoE[FD_Level[FD_Looper]]%, FD_AoE[FD_Level[FD_Looper]]%, FD_AoE[FD_Level[FD_Looper]]%) of its original size
+
+                                Special Effect - Create a special effect attached to the origin of FD_TargetUnit[FD_Looper] using FD_TargetModel
+
+                                Set FD_TargetEffect[FD_Looper] = (Last created special effect)
+
+                    Else - Actions
+
+                        -------- - --------
+
+                        -------- stage 2 -- damaging enemies --------
+
+                        If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+                            If - Conditions
+
+                                FD_TimeLeft[FD_Looper] Less than or equal to 0.00
+
+                            Then - Actions
+
+                                -------- - --------
+
+                                -------- check number of blasts --------
+
+                                If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+                                    If - Conditions
+
+                                        FD_BlastCounter[FD_Looper] Less than FD_NumberOfBlasts[FD_Level[FD_Looper]]
+
+                                    Then - Actions
+
+                                        -------- - --------
+
+                                        -------- spawn effect --------
+
+                                        Set FD_Point1 = (Position of FD_TargetUnit[FD_Looper])
+
+                                        Unit - Create 1 FD_DummyUnitType for Neutral Passive at FD_Point1 facing Default building facing degrees
+
+                                        Set FD_BlastUnit = (Last created unit)
+
+                                        -------- - --------
+
+                                        Animation - Change FD_TargetUnit[FD_Looper]'s size to (FD_CurrentAoE[FD_Looper]%, FD_CurrentAoE[FD_Looper]%, FD_CurrentAoE[FD_Looper]%) of its original size
+
+                                        Animation - Change FD_BlastUnit's size to (FD_CurrentSize[FD_Looper]%, FD_CurrentSize[FD_Looper]%, FD_CurrentSize[FD_Looper]%) of its original size
+
+                                        -------- - --------
+
+                                        Special Effect - Create a special effect attached to the origin of FD_BlastUnit using FD_BlastEffect1
+
+                                        Special Effect - Destroy (Last created special effect)
+
+                                        Special Effect - Create a special effect attached to the origin of FD_BlastUnit using FD_BlastEffect2
+
+                                        Special Effect - Destroy (Last created special effect)
+
+                                        Unit - Add a FD_Interval[FD_Level[FD_Looper]] second Generic expiration timer to FD_BlastUnit
+
+                                        -------- - --------
+
+                                        -------- get units --------
+
+                                        Set FD_DamageGroup = (Units within FD_CurrentAoE[FD_Looper] of FD_Point1)
+
+                                        Custom script:   call RemoveLocation(udg_FD_Point1)
+
+                                        Unit - Set level of FD_DummyAbility for FD_Dummy to FD_Level[FD_Looper]
+
+                                        Trigger - Run Field of Discord OnDamage <gen> (ignoring conditions)
+
+                                        Custom script:   call DestroyGroup(udg_FD_DamageGroup)
+
+                                        -------- - --------
+
+                                        -------- recalculate damage and aoe --------
+
+                                        Set FD_CurrentSize[FD_Looper] = (FD_CurrentSize[FD_Looper] + (FD_CurrentSize[FD_Looper] x (FD_AoEIncrease[FD_Level[FD_Looper]] x 0.01)))
+
+                                        Set FD_CurrentSize[FD_Looper] = (FD_CurrentSize[FD_Looper] + FD_AoEFlatIncrease[FD_Level[FD_Looper]])
+
+                                        Set FD_Damage[FD_Looper] = (FD_Damage[FD_Looper] - (FD_Damage[FD_Looper] x (FD_DamageDecrease[FD_Level[FD_Looper]] x 0.01)))
+
+                                        Set FD_Damage[FD_Looper] = (FD_Damage[FD_Looper] - FD_DamageFlatDecrease[FD_Level[FD_Looper]])
+
+                                        Set FD_CurrentAoE[FD_Looper] = (FD_CurrentAoE[FD_Looper] + ((FD_CurrentAoE[FD_Looper] x FD_AoEIncrease[FD_Level[FD_Looper]]) x 0.01))
+
+                                        Set FD_CurrentAoE[FD_Looper] = (FD_CurrentAoE[FD_Looper] + FD_AoEFlatIncrease[FD_Level[FD_Looper]])
+
+                                        Set FD_TimeLeft[FD_Looper] = FD_Interval[FD_Level[FD_Looper]]
+
+                                        Set FD_BlastCounter[FD_Looper] = (FD_BlastCounter[FD_Looper] + 1)
+
+                                    Else - Actions
+
+                                        -------- - --------
+
+                                        -------- check if out of blasts --------
+
+                                        If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+                                            If - Conditions
+
+                                                FD_BlastCounter[FD_Looper] Equal to FD_NumberOfBlasts[FD_Level[FD_Looper]]
+
+                                            Then - Actions
+
+                                                -------- - --------
+
+                                                -------- deindex --------
+
+                                                Special Effect - Destroy FD_TargetEffect[FD_Looper]
+
+                                                Unit - Add a 0.01 second Generic expiration timer to FD_TargetUnit[FD_Looper]
+
+                                                Set FD_Caster[FD_Looper] = FD_Caster[FD_Index]
+
+                                                Set FD_Player[FD_Looper] = FD_Player[FD_Index]
+
+                                                Set FD_Level[FD_Looper] = FD_Level[FD_Index]
+
+                                                Set FD_Stage[FD_Looper] = FD_Stage[FD_Index]
+
+                                                Set FD_Damage[FD_Looper] = FD_Damage[FD_Index]
+
+                                                Set FD_BlastCounter[FD_Looper] = FD_BlastCounter[FD_Index]
+
+                                                Set FD_CurrentDistance[FD_Looper] = FD_CurrentDistance[FD_Index]
+
+                                                Set FD_TimeLeft[FD_Looper] = FD_TimeLeft[FD_Index]
+
+                                                Set FD_CurrentAoE[FD_Looper] = FD_CurrentAoE[FD_Index]
+
+                                                Set FD_CurrentHeight[FD_Looper] = FD_CurrentHeight[FD_Index]
+
+                                                Set FD_CurrentSize[FD_Looper] = FD_CurrentSize[FD_Index]
+
+                                                Set FD_Angle[FD_Looper] = FD_Angle[FD_Index]
+
+                                                Set FD_MaxDistance[FD_Looper] = FD_MaxDistance[FD_Index]
+
+                                                Set FD_Projectile[FD_Looper] = FD_Projectile[FD_Index]
+
+                                                Set FD_TargetUnit[FD_Looper] = FD_TargetUnit[FD_Index]
+
+                                                Set FD_TargetEffect[FD_Looper] = FD_TargetEffect[FD_Index]
+
+                                                Set FD_Speed[FD_Looper] = FD_Speed[FD_Index]
+
+                                                Set FD_ProjectileEffect[FD_Looper] = FD_ProjectileEffect[FD_Index]
+
+                                                Set FD_Looper = (FD_Looper - 1)
+
+                                                Set FD_Index = (FD_Index - 1)
+
+                                                If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+                                                    If - Conditions
+
+                                                        FD_Index Equal to 0
+
+                                                    Then - Actions
+
+                                                        Trigger - Turn off (This trigger)
+
+                                                    Else - Actions
+
+                                            Else - Actions
+
+                            Else - Actions
+
+                                Set FD_TimeLeft[FD_Looper] = (FD_TimeLeft[FD_Looper] - 0.03)
