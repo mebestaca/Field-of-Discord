@@ -1,0 +1,127 @@
+Field of Discord Cast
+
+    Events
+
+        Unit - A unit Starts the effect of an ability
+
+    Conditions
+
+        (Ability being cast) Equal to FD_Ability
+
+    Actions
+
+        -------- - --------
+
+        -------- save values --------
+
+        Set FD_Index = (FD_Index + 1)
+
+        Set FD_Caster[FD_Index] = (Triggering unit)
+
+        Set FD_Player[FD_Index] = (Triggering player)
+
+        Set FD_Level[FD_Index] = (Level of FD_Ability for FD_Caster[FD_Index])
+
+        -------- - --------
+
+        -------- points --------
+
+        Set FD_Point1 = (Position of FD_Caster[FD_Index])
+
+        Set FD_Point2 = (Target point of ability being cast)
+
+        -------- - --------
+
+        -------- distance and angle --------
+
+        Set FD_Angle[FD_Index] = (Angle from FD_Point1 to FD_Point2)
+
+        Set FD_MaxDistance[FD_Index] = (1.00 + (Distance between FD_Point1 and FD_Point2))
+
+        Set FD_Speed[FD_Index] = (FD_MaxDistance[FD_Index] / (FD_Delay[FD_Level[FD_Index]] / 0.03))
+
+        -------- - --------
+
+        -------- set new point and create projectile --------
+
+        Unit - Create 1 FD_DummyUnitType for Neutral Passive at FD_Point1 facing FD_Angle[FD_Index] degrees
+
+        Set FD_Projectile[FD_Index] = (Last created unit)
+
+        Unit - Add Storm Crow Form to FD_Projectile[FD_Index]
+
+        Unit - Remove Storm Crow Form from FD_Projectile[FD_Index]
+
+        Special Effect - Create a special effect attached to the origin of FD_Projectile[FD_Index] using FD_ProjectileModel
+
+        Set FD_ProjectileEffect[FD_Index] = (Last created special effect)
+
+        -------- - --------
+
+        -------- clean up --------
+
+        Custom script:   call RemoveLocation(udg_FD_Point1)
+
+        Custom script:   call RemoveLocation(udg_FD_Point2)
+
+        -------- - --------
+
+        -------- special effects --------
+
+        Special Effect - Create a special effect attached to the FD_AttachLeftHand of FD_Caster[FD_Index] using FD_HandsSFX
+
+        Special Effect - Destroy (Last created special effect)
+
+        Special Effect - Create a special effect attached to the FD_AttachRightHand of FD_Caster[FD_Index] using FD_HandsSFX
+
+        Special Effect - Destroy (Last created special effect)
+
+        Special Effect - Create a special effect attached to the FD_AttachOrigin of FD_Caster[FD_Index] using FD_OriginSFX
+
+        Special Effect - Destroy (Last created special effect)
+
+        -------- - --------
+
+        -------- calculate damage --------
+
+        Set FD_TempAgiDamage = (((Real((Agility of FD_Caster[FD_Index] (Include bonuses)))) x FD_DamageAgility[FD_Level[FD_Index]]) x 0.01)
+
+        Set FD_TempIntDamage = (((Real((Intelligence of FD_Caster[FD_Index] (Include bonuses)))) x FD_DamageIntelligence[FD_Level[FD_Index]]) x 0.01)
+
+        Set FD_TempStrDamage = (((Real((Strength of FD_Caster[FD_Index] (Include bonuses)))) x FD_DamageStrength[FD_Level[FD_Index]]) x 0.01)
+
+        Set FD_Damage[FD_Index] = ((FD_TempStrDamage + FD_TempAgiDamage) + (FD_TempIntDamage + FD_DamageAbsolute[FD_Level[FD_Index]]))
+
+        -------- - --------
+
+        -------- initialize values --------
+
+        Set FD_Stage[FD_Index] = 0
+
+        Set FD_BlastCounter[FD_Index] = 0
+
+        Set FD_CurrentDistance[FD_Index] = 0.00
+
+        Set FD_TimeLeft[FD_Index] = 0.00
+
+        Set FD_CurrentAoE[FD_Index] = FD_AoE[FD_Level[FD_Index]]
+
+        Set FD_CurrentHeight[FD_Index] = 0.00
+
+        Set FD_CurrentSize[FD_Index] = 100.00
+
+        -------- - --------
+
+        -------- run effect --------
+
+        If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+            If - Conditions
+
+                FD_Index Equal to 1
+
+            Then - Actions
+
+                Trigger - Turn on Field of Discord Effect <gen>
+
+            Else - Actions
