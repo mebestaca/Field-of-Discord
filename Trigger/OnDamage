@@ -1,0 +1,77 @@
+Field of Discord OnDamage
+
+    Events
+
+    Conditions
+
+    Actions
+
+        --------   --------
+
+        -------- this part can be configured as well --------
+
+        Unit Group - Pick every unit in FD_DamageGroup and do (Actions)
+
+            Loop - Actions
+
+                Set FD_Picked = (Picked unit)
+
+                -------- - --------
+
+                -------- you may configure the conditions to filter out which kind of units can be affected by the spell --------
+
+                If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+
+                    If - Conditions
+
+                        (FD_Picked is A structure) Equal to False
+
+                        (FD_Picked is Magic Immune) Equal to False
+
+                        (FD_Picked is Mechanical) Equal to False
+
+                        (FD_Picked is alive) Equal to True
+
+                        (FD_Picked belongs to an enemy of FD_Player[FD_Looper]) Equal to True
+
+                    Then - Actions
+
+                        -------- - --------
+
+                        -------- this is where the damage occurs --------
+
+                        -------- Note: just in case you have other abilities that can alter the damage of this spell --------
+
+                        -------- this is the best place to place a condition and change the value of FD_Damage[Looper] --------
+
+                        Unit - Cause FD_Caster[FD_Looper] to damage FD_Picked, dealing FD_Damage[FD_Looper] damage of attack type FD_AttackType and damage type FD_DamageType
+
+                        -------- - --------
+
+                        -------- you may add more special effects here --------
+
+                        Special Effect - Create a special effect attached to the FD_HitAttach of FD_Picked using FD_HitSFX
+
+                        Special Effect - Destroy (Last created special effect)
+
+                        -------- - --------
+
+                        -------- do not tamper the next trigger lines --------
+
+                        Set FD_Point1 = (Position of FD_Picked)
+
+                        Custom script:   call SetUnitX(udg_FD_Dummy, GetLocationX(udg_FD_Point1))
+
+                        Custom script:   call SetUnitY(udg_FD_Dummy, GetLocationY(udg_FD_Point1))
+
+                        Custom script:   call RemoveLocation(udg_FD_Point1)
+
+                        -------- - --------
+
+                        -------- you may change the unit order in case you are using other base ability for your slow --------
+
+                        Unit - Order FD_Dummy to Undead Necromancer - Cripple FD_Picked
+
+                    Else - Actions
+
+                        Set FD_Picked = No unit
