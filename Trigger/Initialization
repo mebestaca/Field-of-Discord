@@ -1,0 +1,243 @@
+Field of Discord Init
+
+    Events
+
+        Map initialization
+
+    Conditions
+
+    Actions
+
+        -------- - --------
+
+        -------- set the base ability for your spell --------
+
+        Set FD_Ability = Field of Discord (hero ability)
+
+        -------- - --------
+
+        -------- set the slow effect base ability --------
+
+        -------- Note: Use object editor to modify the duration and reduction rate --------
+
+        Set FD_DummyAbility = Field of Discord (slow)
+
+        -------- - --------
+
+        -------- set the model used to mark the target area --------
+
+        Set FD_TargetModel = Abilities\Spells\Undead\VampiricAura\VampiricAura.mdl
+
+        -------- - --------
+
+        -------- set the model used for the projectile --------
+
+        Set FD_ProjectileModel = Abilities\Weapons\FrostWyrmMissile\FrostWyrmMissile.mdl
+
+        -------- - --------
+
+        -------- set the special effect used in the blast --------
+
+        Set FD_BlastEffect1 = Abilities\Spells\Undead\FrostNova\FrostNovaTarget.mdl
+
+        Set FD_BlastEffect2 = Abilities\Spells\Other\Charm\CharmTarget.mdl
+
+        -------- - --------
+
+        -------- set the special effects attached to the caster --------
+
+        Set FD_HandsSFX = Abilities\Spells\Human\StormBolt\StormBoltMissile.mdl
+
+        Set FD_OriginSFX = Abilities\Spells\Other\Charm\CharmTarget.mdl
+
+        Set FD_AttachOrigin = origin
+
+        Set FD_AttachLeftHand = hand, left
+
+        Set FD_AttachRightHand = hand, right
+
+        -------- - --------
+
+        -------- set the special effects attached on enemies hit by the blast --------
+
+        Set FD_HitSFX = Abilities\Weapons\FrostWyrmMissile\FrostWyrmMissile.mdl
+
+        Set FD_HitAttach = origin
+
+        -------- - --------
+
+        -------- set the spell's attack type --------
+
+        Set FD_AttackType = Spells
+
+        -------- - --------
+
+        -------- set the spell's damage type --------
+
+        Set FD_DamageType = Normal
+
+        -------- - --------
+
+        -------- set the initial area of effect size --------
+
+        Set FD_AoE[1] = 200.00
+
+        Set FD_AoE[2] = 200.00
+
+        Set FD_AoE[3] = 200.00
+
+        -------- - --------
+
+        -------- set the spell's absolute damage value --------
+
+        Set FD_DamageAbsolute[1] = 150.00
+
+        Set FD_DamageAbsolute[2] = 200.00
+
+        Set FD_DamageAbsolute[3] = 250.00
+
+        -------- - --------
+
+        -------- set the bonus damage from agility --------
+
+        -------- Note: to deal 30% damage set the value to 30 not 0.3 --------
+
+        Set FD_DamageAgility[1] = 0.00
+
+        Set FD_DamageAgility[2] = 0.00
+
+        Set FD_DamageAgility[3] = 0.00
+
+        -------- - --------
+
+        -------- set the bonus damage from intelligence --------
+
+        -------- Note: to deal 30% damage set the value to 30 not 0.3 --------
+
+        Set FD_DamageIntelligence[1] = 20.00
+
+        Set FD_DamageIntelligence[2] = 20.00
+
+        Set FD_DamageIntelligence[3] = 20.00
+
+        -------- - --------
+
+        -------- set the bonus damage from strength --------
+
+        -------- Note: to deal 30% damage set the value to 30 not 0.3 --------
+
+        Set FD_DamageStrength[1] = 0.00
+
+        Set FD_DamageStrength[2] = 0.00
+
+        Set FD_DamageStrength[3] = 0.00
+
+        -------- - --------
+
+        -------- set the area of effect increase per blast --------
+
+        -------- Note: to apply 30% AoE increase use 30 not 0.3 --------
+
+        Set FD_AoEIncrease[1] = 30.00
+
+        Set FD_AoEIncrease[2] = 30.00
+
+        Set FD_AoEIncrease[3] = 30.00
+
+        -------- - --------
+
+        -------- set the flat area of effect increase per blast --------
+
+        Set FD_AoEFlatIncrease[1] = 0.00
+
+        Set FD_AoEFlatIncrease[2] = 0.00
+
+        Set FD_AoEFlatIncrease[3] = 0.00
+
+        -------- - --------
+
+        -------- set the damage reduction per blast --------
+
+        -------- Note: to apply 30% set the value to 30 not 0.3 --------
+
+        Set FD_DamageDecrease[1] = 30.00
+
+        Set FD_DamageDecrease[2] = 30.00
+
+        Set FD_DamageDecrease[3] = 30.00
+
+        -------- - --------
+
+        -------- set the flat damage reduction per blast --------
+
+        Set FD_DamageFlatDecrease[1] = 0.00
+
+        Set FD_DamageFlatDecrease[2] = 0.00
+
+        Set FD_DamageFlatDecrease[3] = 0.00
+
+        -------- - --------
+
+        -------- set the number of blasts --------
+
+        Set FD_NumberOfBlasts[1] = 3
+
+        Set FD_NumberOfBlasts[2] = 3
+
+        Set FD_NumberOfBlasts[3] = 3
+
+        -------- - --------
+
+        -------- set the interval of the blasts in seconds --------
+
+        Set FD_Interval[1] = 1.00
+
+        Set FD_Interval[2] = 1.00
+
+        Set FD_Interval[3] = 1.00
+
+        -------- - --------
+
+        -------- set the maximum height of the projectile --------
+
+        Set FD_MaxHeight[1] = 500.00
+
+        Set FD_MaxHeight[2] = 500.00
+
+        Set FD_MaxHeight[3] = 500.00
+
+        -------- - --------
+
+        -------- set the projectile's impact delay --------
+
+        Set FD_Delay[1] = 1.25
+
+        Set FD_Delay[2] = 1.25
+
+        Set FD_Delay[3] = 1.25
+
+        -------- - --------
+
+        -------- set the dummy unit-type --------
+
+        -------- Note: you may delete the lines below if you already have a one dummy caster set up on your map --------
+
+        Set FD_DummyUnitType = Frost Nova EX (dummy)
+
+        -------- - --------
+
+        -------- one dummy caster set up and preload --------
+
+        Set FD_Point1 = (Random point in (Playable map area))
+
+        Unit - Create 1 FD_DummyUnitType for Neutral Passive at FD_Point1 facing Default building facing degrees
+
+        Set FD_Dummy = (Last created unit)
+
+        Custom script:   call RemoveLocation(udg_FD_Point1)
+
+        Unit - Add FD_Ability to FD_Dummy
+
+        Unit - Remove FD_Ability from FD_Dummy
+
+        Unit - Add FD_DummyAbility to FD_Dummy
